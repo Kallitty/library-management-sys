@@ -1,0 +1,18 @@
+# Build output
+target/
+out/
+
+# Runtime data written by the app
+data/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
