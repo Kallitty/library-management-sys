@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Build and test (Java ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ["17", "21"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      - name: Build, run tests and package
+        run: mvn -B verify
+
+      - name: Smoke-test the packaged jar
+        run: printf '1\nDune\nFrank Herbert\n7\n' | java -jar target/library-management-system.jar | grep "Added: Dune by Frank Herbert"
